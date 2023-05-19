@@ -20,18 +20,38 @@ export class CreateUserController {
         response.json(user)
     }
 
-//     //Lidando com atualização de dados
-//     async update(request: Request, response: Response) {
-//         const { name, email, password, old_password } = request.body;
-//         const { id } = request.params;
-
-//         const database = await sqliteConnection();
-//         const user = await database.get("SELECT * FROM users WHERE id = (?)", [id]);
-
-//         user.name = name ?? user.name;
-//         user.email = email ?? user.email;
-    
-
-//     }
  }
 
+ export class UpdateUserController {
+    async handle(request: Request, response: Response) {
+      const { id } = request.params;
+      const { name, email, password } = request.body;
+  
+      try {
+        // Verificar se o usuário existe
+        const existingUser = await database.user.findUnique({
+          where: { id: parseInt(id) }, // Converter 'id' para número
+        });
+        
+        if (!existingUser) {
+          return response.status(404).json({ error: "Usuário não encontrado." });
+        }
+  
+        // Atualizar dados do usuário
+        const updatedUser = await database.user.update({
+          where: { id: parseInt(id) }, // Converter 'id' para número
+          data: {
+            name: name || existingUser.name,
+            email: email || existingUser.email,
+            password: password
+              ? await hash(password, 10)
+              : existingUser.password,
+          },
+        });
+  
+        response.json(updatedUser);
+      } catch (error) {
+        response.status(500).json({ error: "Erro ao atualizar usuário." });
+      }
+    }
+  }

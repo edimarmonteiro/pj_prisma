@@ -1,10 +1,12 @@
 import { Router } from "express"
-import { CreateUserController } from "../controllers/CreateUserController";
+import { CreateUserController, UpdateUserController } from "../controllers/CreateUserController";
 
 const router = Router();
 
-const createUser = new CreateUserController
+const createUser = new CreateUserController();
+const updateUser = new UpdateUserController();
 
-router.post('/user', createUser.handle)
+router.post('/user', createUser.handle);
+router.put('/:id', updateUser.handle)
 
 export { router };
