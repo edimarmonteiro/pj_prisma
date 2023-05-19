@@ -18,5 +18,45 @@ model User {
   password  String
   createdAt DateTime @default(now())
 
+  notes Note[]
+
   @@map("user")
+}
+
+model Note {
+  id Int @id @default(autoincrement())
+  title String @unique
+  description String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId],  references: [id]) // Adiciona essa linha para estabelecer o relacionamento
+  userId Int // Adiciona essa linha para criar a chave estrangeira
+
+  tags Tags[]
+  link Link[]
+
+  @@map("notes")
+}
+
+model Tags {
+  id Int @id @default(autoincrement())
+  nameTitle String @unique
+  createdAt DateTime @default(now())
+
+  notes Note @relation(fields: [notesId], references: [id])
+  notesId Int
+
+  @@map("tags")
+}
+
+model Link {
+  id Int @id @default(autoincrement())
+  url String 
+  createdAt DateTime @default(now())
+
+  notes Note @relation(fields: [notesId], references: [id])
+  notesId Int
+
+  @@map("link")
+
 }

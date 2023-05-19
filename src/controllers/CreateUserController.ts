@@ -1,6 +1,6 @@
 import {Response , Request } from "express"
 import { database } from "../database";
-const { hash } = require("bcrypt")
+const { hash, compare } = require("bcrypt")
 
 
 export class CreateUserController {
@@ -25,7 +25,7 @@ export class CreateUserController {
  export class UpdateUserController {
     async handle(request: Request, response: Response) {
       const { id } = request.params;
-      const { name, email, password } = request.body;
+      const { name, email, password, currentPassword } = request.body;
   
       try {
         // Verificar se o usuário existe
@@ -37,6 +37,12 @@ export class CreateUserController {
           return response.status(404).json({ error: "Usuário não encontrado." });
         }
   
+      // Verificar a senha atual do usuário
+      const isPasswordValid = await compare(currentPassword, existingUser.password);
+      
+      if (!isPasswordValid) {
+        return response.status(401).json({ error: "Senha atual inválida." });
+      }
         // Atualizar dados do usuário
         const updatedUser = await database.user.update({
           where: { id: parseInt(id) }, // Converter 'id' para número
