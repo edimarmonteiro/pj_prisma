@@ -1,6 +1,6 @@
-import {Response , Request } from "express"
+import {Response , Request } from "express";
 import { database } from "../database";
-const { hash, compare } = require("bcrypt")
+const { hash, compare } = require("bcrypt");
 
 
 export class CreateUserController {

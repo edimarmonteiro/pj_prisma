@@ -32,6 +32,7 @@ model Note {
   user User @relation(fields: [userId],  references: [id]) // Adiciona essa linha para estabelecer o relacionamento
   userId Int // Adiciona essa linha para criar a chave estrangeira
 
+  
   tags Tags[]
   link Link[]
 
