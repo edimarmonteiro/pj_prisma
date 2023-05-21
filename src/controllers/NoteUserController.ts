@@ -1,19 +1,19 @@
-import { Request, Response } from "express"
-import { database } from "../database";
+// import { Request, Response } from "express"
+// import { database } from "../database";
 
 
 
-export class NoteUserController {
-    async handle(request: Request, response: Response) {
-        const { title, description, tags, links } = request.body;
+// export class NoteUserController {
+//     async handle(request: Request, response: Response) {
+//         const { title, description, tags, links } = request.body;
 
-        const note = await database.note.create({
-            data: {
-                title: title,
-                description: description,
+//         const note = await database.note.create({
+//             data: {
+//                 title: title,
+//                 description: description,
                 
-            }
-        });
-    }
-}
+//             }
+//         });
+//     }
+// }
 
