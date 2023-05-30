@@ -6,9 +6,9 @@ const router = Router();
 
 const createUser = new CreateUserController();
 const updateUser = new UpdateUserController();
-// const createNotes = new NoteUserController();
+const createNotes = new NoteUserController();
 
 router.post('/user', createUser.handle);
 router.put('/:id', updateUser.handle)
-// router.post('/notes', createNotes.handle)
+router.post('/notes', createNotes.handle)
 export { router };
