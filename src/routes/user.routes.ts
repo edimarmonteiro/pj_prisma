@@ -1,13 +1,13 @@
-// import { Router } from "express"
-// import { CreateUserController, UpdateUserController } from "../controllers/CreateUserController";
+import { Router } from "express"
+import { CreateUserController, UpdateUserController } from "../controllers/CreateUserController";
 
-// const router = Router();
+const userrouter = Router();
 
-// const createUser = new CreateUserController();
-// const updateUser = new UpdateUserController();
+const createUser = new CreateUserController();
+const updateUser = new UpdateUserController();
 
 
-// router.post('/', createUser.handle);
-// router.put('/:id', updateUser.handle);
+userrouter.post('/:id', createUser.handle);
+userrouter.put('/', updateUser.handle);
 
-// export { router };
+export { userrouter };
